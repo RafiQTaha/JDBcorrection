@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Jdb Correction - Enseigant{% endblock %}
+
+
+{% block body %}
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+          <h1>Sessions</h1>
+          <div class="section-header-breadcrumb">
+              <a href="#" class="btn btn-primary ml-1" id="generer"><i class="fas fa-search"></i>  Générer session</a> 
+          </div>
+        </div>
+
+        <div class="section-body">
+        <div class="card">
+            <div class="card-header">
+            <h4>Tableau des sessions</h4>
+            </div>
+            <div class="card-body">
+            <div class="card-search" style="margin-bottom: 1.5rem;">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="etablissement">Etablissement:</label>
+                        <select class="form-control" name="etablissement" id="etablissement">
+                            <option value="">Choix etablissement</option>
+                            {% for etablissement in etablissements %}
+                                <option value="{{etablissement.id}}">{{etablissement.designation}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="formation">Formation:</label>
+                        <select class="form-control" name="formation" id="formation">
+                            
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="promotion">Promotion:</label>
+                        <select class="form-control" name="promotion" id="promotion">
+                            
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="semestre">Semestre:</label>
+                        <select class="form-control" name="semestre" id="semestre">
+                            
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+                <table id="datatables_gestion_session" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>Session</th>
+                            <th>Date Fermeture</th>
+                            <th>User</th>
+                            <th>Nom</th>
+                            <th>Prenom</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>id</th>
+                            <th>Session</th>
+                            <th>Date Fermeture</th>
+                            <th>User</th>
+                            <th>Nom</th>
+                            <th>Prenom</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            
+        </div>
+        </div>
+    </section>
+</div>
+
+
+
+<!--Modal Import Group-->
+{# {% include 'parametre/formation/modals/ajouter.html.twig' %}#}
+{% include 'session/modals/genere.html.twig' with {'enseignants': enseignants} %} 
+
+{% endblock %}
+
+{% block javascripts %}
+{{parent()}}
+
+<script src="/assets/js/etudiant/generer.js"></script>
+
+{% endblock %}
+

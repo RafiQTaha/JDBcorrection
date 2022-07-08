@@ -205,6 +205,9 @@
     "sebastian/version": {
         "version": "3.0.2"
     },
+    "selective/rar": {
+        "version": "0.2.0"
+    },
     "sensio/framework-extra-bundle": {
         "version": "6.2",
         "recipe": {

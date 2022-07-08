@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{asset('assets/css/dashboard.css')}}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{asset('assets/css/multi-select.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css"/>
+</head>
+<body>
+    <div id="app">
+        <div class="main-wrapper">
+            <div class="main-sidebar pl-2" style="width: 25rem;">
+                <aside id="sidebar-wrapper" style="margin-top:1rem">
+                  
+                  <ul class="sidebar-menu m-0">
+                    <!-- <h4>Note Finale</h4> -->
+                    <form class="form p-3" method="POST" action="{{path('rapport_rapport_save', {rapport: rapport.id})}}">
+                        <label for="note" style="font-size:16px">Note:</label>
+                        <input class="form-control mb-2" style="font-size:22px" step="0.01" {% if rapport.note %} value='{{rapport.note}}' disabled {% endif %} type="number" name="note" id="note" />
+                        <label for="observation" style="font-size:16px">Observation:</label>
+                        <textarea class="form-control" style="height: 250px;" name="observation" id="observation" >{% if rapport.observation %} {{rapport.observation}} {% endif %}</textarea>
+                        {% if rapport.note is null %}
+                        <button type="submit" class="btn btn-success mt-2">Enregistre</button>
+                        {% endif %}
+                    </from>
+                  </ul>
+                </aside>
+              </div>
+              <div class="main-content" style="padding-top: 2rem; padding-left: 27rem;">
+                  <section class="section">
+                     <h4 class="mb-3">{{inscription.code}} ({{inscription.nom}} {{inscription.prenom}}) - {{rapport.type}}</h4>
+
+                     <div style="height:90vh">
+                        {# <img src="{{asset('uploads/rapport/pdfs/'~ rapport.url)}}" /> #}
+                        <iframe
+                            src="{{asset('uploads/rapport/pdfs/'~ rapport.url)}}"
+                            frameBorder="0"
+                            scrolling="auto"
+                            height="90%"
+                            width="95%"
+                        ></iframe>
+                     </div>
+                  </section>
+              </div>
+       
+        </div>
+    </div>
+   
+</body>
+</html>
+
+
+
+

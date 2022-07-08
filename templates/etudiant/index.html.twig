@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Jdb Correction - Etudiants{% endblock %}
+
+
+{% block body %}
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>Etudiants</h1>
+            <div class="section-header-breadcrumb">
+            {% if is_granted('ROLE_ADMIN')  %}
+                <a href="#" class="btn btn-primary ml-1" id="search"><i class="fas fa-search"></i>  Recherche</a> 
+            {% endif %}
+            </div>
+        </div>
+
+        <div class="section-body">
+        <div class="card">
+            <div class="card-header">
+            <h4>Tableau des etudiants</h4>
+            </div>
+            <div class="card-body">
+            {% if is_granted('ROLE_ADMIN')  %}
+            <div class="card-search" style="margin-bottom: 1.5rem;">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="etablissement">Etablissement:</label>
+                        <select class="form-control" name="etablissement" id="etablissement">
+                            <option value="">Choix etablissement</option>
+                            {% for etablissement in etablissements %}
+                                <option value="{{etablissement.id}}">{{etablissement.designation}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="formation">Formation:</label>
+                        <select class="form-control" name="formation" id="formation">
+                            
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="promotion">Promotion:</label>
+                        <select class="form-control" name="promotion" id="promotion">
+                            
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="semestre">Semestre:</label>
+                        <select class="form-control" name="semestre" id="semestre">
+                            
+                        </select>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if table is not null %}
+                {{table | raw}}
+            {% endif %}
+            </div>
+            
+        </div>
+        </div>
+    </section>
+</div>
+
+
+
+<!--Modal Import Group-->
+{# {% include 'parametre/formation/modals/ajouter.html.twig' %}
+{% include 'parametre/formation/modals/modifier.html.twig' %} #}
+
+{% endblock %}
+
+{% block javascripts %}
+{{parent()}}
+
+<script src="/assets/js/etudiant/etudiant.js"></script>
+
+{% endblock %}
+

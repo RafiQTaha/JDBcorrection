@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+    <title>
+      Jdb Correction - Login
+    </title>
+  </head>
+  <body>
+    <div class="login">
+      <h2>
+        JDB - Correction
+      </h2>
+      <div class="container {% if last_username | length == 20 %} right-panel-active {% endif %}" id="container">
+        <div class="form-container sign-up-container">
+          <form  method="post">
+            <h1>
+              Enseignant
+            </h1>
+            {% if error %}
+              <div class="login__error">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+              </div>
+            {% endif %}
+            <span class="singup__error"></span>
+            <span class="singup__success"></span>
+
+            <input type="text"
+              id="singup_username"
+              value="{{ last_username }}"
+              name="username"
+              placeholder="Token"
+              required />
+             <input type="hidden"
+              name="_csrf_token"
+              value="{{ csrf_token('authenticate') }}" />
+            <button type="submit">Login</button>
+          </form>
+          <span class="footer">FCZ - MTSI - Solutions Universitaires</span>
+        </div>
+        <div class="form-container sign-in-container">
+          <form method="post">
+            <h1>
+              Connexion
+            </h1>
+            {% if error %}
+              <div class="login__error">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+              </div>
+            {% endif %}
+
+            <input value="{{ last_username }}"
+              name="username"
+              placeholder="Username" />
+            <input type="password"
+              name="password"
+              id="inputPassword"
+              placeholder="Password" />
+            <input type="hidden"
+              name="_csrf_token"
+              value="{{ csrf_token('authenticate') }}" />
+            {# <a href="#">Forgot your password?</a> #}
+            <button type="submit">Connexion</button>
+          </form>
+          <span class="footer">FCZ - MTSI - Solutions Universitaires</span>
+        </div>
+        <div class="overlay-container">
+          <div class="overlay">
+            <div class="overlay-panel overlay-left">
+              {# <h1>Welcome Back!</h1>
+						<p>To keep connected with us please login with your personal info</p> #}
+              <button class="ghost" id="signIn">Connexion</button>
+            </div>
+            <div class="overlay-panel overlay-right">
+              {# <h1>Creation de compte</h1> #}
+              {# <p>Enter your personal details and start journey with us</p> #}
+              <button class="ghost" id="signUp">Enseignant ?</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>        
+    <script src="{{ asset('assets/js/login/login.js') }}"></script>
+  </body>
+</html>

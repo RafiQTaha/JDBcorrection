@@ -1,0 +1,51 @@
+<table id="datatables_etudiant" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Etudiant Infos</th>
+            {% for cycle in cycles %}
+                <th>{{cycle.cycle}}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for data in datas %}
+            <tr>
+                <td>{{data.inscription.code}} ({{data.inscription.nom}} {{data.inscription.prenom}})</td>
+                {% for stage in data.stages %}
+                    <td>
+                        {% if stage.clinique is null %}
+                            - 
+                        {% else %}
+                            <a href="{{path('rapport_stageDetails', {rapport: stage.clinique.id})}}" target="_blank" >
+                                Clinique
+                                {% if stage.clinique.note %}  
+                                    (Note: {{stage.clinique.note}})
+                                {% endif %}  
+                            </a>
+                        {% endif %}
+                        | 
+                         {% if stage.simulation is null %}
+                            - 
+                        {% else %}
+                            <a href="{{path('rapport_stageDetails', {rapport: stage.simulation.id})}}" target="_blank" >
+                                Simulation
+                                {% if stage.simulation.note %}  
+                                    (Note: {{stage.simulation.note}})
+                                {% endif %} 
+                            </a>
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Etudiant Infos</th>
+            {% for cycle in cycles %}
+                <th>{{cycle.cycle}}</th>
+            {% endfor %}
+        </tr>
+    </tfoot>
+</table>
