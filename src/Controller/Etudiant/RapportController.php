@@ -232,6 +232,7 @@ class RapportController extends AbstractController
                 $sheet->setCellValue('E'.$i, $infoBYinscription->getNote());
                 $sheet->setCellValue('F'.$i, $infoBYinscription->getObservation());
             }
+            
             $i++;
             $j++;
         }
