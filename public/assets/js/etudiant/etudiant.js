@@ -13,6 +13,10 @@ const Toast = Swal.mixin({
     
     $(document).ready(function  () {
     $('#datatables_etudiant').DataTable({
+        lengthMenu: [
+            [10, 15, 25, 50, 100, 20000000000000],
+            [10, 15, 25, 50, 100, "All"],
+        ],
         language: {
             url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json",
         },

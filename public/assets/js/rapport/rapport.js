@@ -80,6 +80,10 @@ const Toast = Swal.mixin({
             }
             $(".content").html(response)
             $('.content #datatables_etudiant').DataTable({
+                lengthMenu: [
+                    [10, 15, 25, 50, 100, 20000000000000],
+                    [10, 15, 25, 50, 100, "All"],
+                ],
                 language: {
                     url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json",
                 },
@@ -100,11 +104,19 @@ const Toast = Swal.mixin({
         e.preventDefault();
         let modalAlert = $("#importer-modal .modal-body .alert")
         modalAlert.remove();
+        if($('.myfile').val() == ""){
+            $("#importer-modal .modal-body").prepend(
+                `<div class="alert alert-danger">Merci de choisir Un fichier!</div>`
+            );
+            setTimeout(() => {
+                $(".modal-body .alert").remove();
+            }, 2500) 
+            return;
+        }
         const icon = $("#save_import .btn i");
         // const button = $("#import-group-ins .btn");
         icon.removeClass('fa-check-circle').addClass("fa-spinner fa-spin");
         var formData = new FormData($("#save_import")[0]);
-        
         console.log(formData);
         try {
         const request = await axios.post("/etudiant/rapport/import", formData, {

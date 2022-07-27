@@ -55,6 +55,7 @@ class EtudiantController extends AbstractController
         $response = $this->client->request('GET', $this->getParameter("api")."/getlistofstagebysemestreannee/$id");
         $session = $request->getSession();
         $data = $response->toArray();
+        // dd($data);
         $inscriptions = $data['inscriptions'];
         $cycles = $data['cycles'];
         // dd($cycles);
@@ -77,6 +78,7 @@ class EtudiantController extends AbstractController
                 ]);
             // }
         }
+        // dd($cycles);
         $html = $this->render("rapport/page/table.html.twig", [
             'datas' => $data,
             'cycles' => $cycles

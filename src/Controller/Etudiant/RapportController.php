@@ -46,7 +46,7 @@ class RapportController extends AbstractController
         $files = $request->files->get('file');
         foreach ($files as $file) {
             if($file->guessExtension() !== 'pdf'){
-                return new JsonResponse('Prière d\'enregister des fichiers pdf', 500);            
+                return new JsonResponse('Prière d\'enregister des fichiers pdf!', 500);            
             }
         }
         
@@ -159,26 +159,6 @@ class RapportController extends AbstractController
         // dd($abreviations);
         $inscriptions = $response['inscriptions'];
         $cycles = $response['cycles'];
-        // dd($cycles);
-        $data = [];
-        // foreach ($inscriptions as $key => $inscription) {
-        //     // if($inscription['id'] == "12105" or $inscription['id'] == "12156") {
-        //         $arrayOfStage = [];
-        //         foreach ($cycles as $cycle) {
-        //             $stageClinique = $this->em->getRepository(Rapport::class)->findStage($inscription["id"], $cycle['stages'], "clinique");
-        //             $stageSimulation = $this->em->getRepository(Rapport::class)->findStage($inscription["id"], $cycle['stages'], "simulation");
-                    
-        //             array_push($arrayOfStage, [
-        //                 'clinique' => $stageClinique,
-        //                 'simulation' => $stageSimulation
-        //             ]);
-        //         }
-        //         array_push($data, [
-        //             'inscription' => $inscription,
-        //             'stages' => $arrayOfStage
-        //         ]);
-        //     // }
-        // }
         // dd($inscriptions);
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -207,59 +187,76 @@ class RapportController extends AbstractController
         $sheet->setCellValue('C4', 'NOM');
         $sheet->setCellValue('D4', 'PRENOM');
         $sheet->setCellValue('E4', 'CYCLE 1');
-        $sheet->setCellValue('F4', 'NOTE 1');
-        $sheet->setCellValue('G4', 'OBSERVATION 1');
-        $sheet->setCellValue('H4', 'CYCLE 2');
-        $sheet->setCellValue('I4', 'NOTE 2');
-        $sheet->setCellValue('J4', 'OBSERVATION2');
-        $sheet->setCellValue('K4', 'CYCLE 3');
-        $sheet->setCellValue('L4', 'NOTE 3');
-        $sheet->setCellValue('M4', 'OBSERVATION 3');
-        $sheet->setCellValue('N4', 'CYCLE 4');
-        $sheet->setCellValue('O4', 'NOTE 4');
-        $sheet->setCellValue('P4', 'OBSERVATION 4');
+        $sheet->setCellValue('F4', 'N-Cli');
+        $sheet->setCellValue('G4', 'N-Sim');
+        $sheet->setCellValue('H4', 'OBS Cli');
+        $sheet->setCellValue('I4', 'OBS Sim');
+        $sheet->setCellValue('J4', 'CYCLE 2');
+        $sheet->setCellValue('K4', 'N-Cli');
+        $sheet->setCellValue('L4', 'N-Sim');
+        $sheet->setCellValue('M4', 'OBS Cli');
+        $sheet->setCellValue('N4', 'OBS Sim');
+        $sheet->setCellValue('O4', 'CYCLE 3');
+        $sheet->setCellValue('P4', 'N-Cli');
+        $sheet->setCellValue('Q4', 'N-Sim');
+        $sheet->setCellValue('R4', 'OBS Cli');
+        $sheet->setCellValue('S4', 'OBS Sim');
+        $sheet->setCellValue('T4', 'CYCLE 4');
+        $sheet->setCellValue('U4', 'N-Cli');
+        $sheet->setCellValue('V4', 'N-Sim');
+        $sheet->setCellValue('W4', 'OBS Cli');
+        $sheet->setCellValue('X4', 'OBS Sim');
 
         $i=5;
         $j=1;
         foreach ($inscriptions as $inscription) {
-            $infoBYinscription = $this->em->getRepository(Rapport::class)->findOneBy(['inscription'=>$inscription['id']]);
             // dd($infoBYinscription);
             $sheet->setCellValue('A'.$i, $j);
             $sheet->setCellValue('B'.$i, $inscription['id']);
             $sheet->setCellValue('C'.$i, $inscription['nom']);
             $sheet->setCellValue('D'.$i, $inscription['prenom']);
-            if ($infoBYinscription != Null) {
-                $sheet->setCellValue('E'.$i, $infoBYinscription->getNote());
-                $sheet->setCellValue('F'.$i, $infoBYinscription->getObservation());
+            $k = 1;
+            foreach ($cycles as $cycle) {
+                $stageClinique = $this->em->getRepository(Rapport::class)->findStage($inscription["id"], $cycle['stages'], "clinique");
+                $stageSimulation = $this->em->getRepository(Rapport::class)->findStage($inscription["id"], $cycle['stages'], "simulation");
+                if ($stageClinique != null && $stageSimulation != null) {
+                    switch ($k) {
+                        case 1:
+                            $sheet->setCellValue('E'.$i, $stageClinique->getStage());
+                            $sheet->setCellValue('F'.$i, $stageClinique->getNote());
+                            $sheet->setCellValue('G'.$i, $stageSimulation->getNote());
+                            $sheet->setCellValue('H'.$i, $stageClinique->getObservation());
+                            $sheet->setCellValue('I'.$i, $stageSimulation->getObservation());
+                            break;
+                        case 2:
+                            $sheet->setCellValue('E'.$i, $stageClinique->getStage());
+                            $sheet->setCellValue('F'.$i, $stageClinique->getNote());
+                            $sheet->setCellValue('G'.$i, $stageSimulation->getNote());
+                            $sheet->setCellValue('H'.$i, $stageClinique->getObservation());
+                            $sheet->setCellValue('I'.$i, $stageSimulation->getObservation());
+                            break;
+                        case 3:
+                            $sheet->setCellValue('E'.$i, $stageClinique->getStage());
+                            $sheet->setCellValue('F'.$i, $stageClinique->getNote());
+                            $sheet->setCellValue('G'.$i, $stageSimulation->getNote());
+                            $sheet->setCellValue('H'.$i, $stageClinique->getObservation());
+                            $sheet->setCellValue('I'.$i, $stageSimulation->getObservation());
+                            break;
+                        case 4:
+                            $sheet->setCellValue('E'.$i, $stageClinique->getStage());
+                            $sheet->setCellValue('F'.$i, $stageClinique->getNote());
+                            $sheet->setCellValue('G'.$i, $stageSimulation->getNote());
+                            $sheet->setCellValue('H'.$i, $stageClinique->getObservation());
+                            $sheet->setCellValue('I'.$i, $stageSimulation->getObservation());
+                            break;
+                    }
+                }
+                $k++;
             }
-            
+
             $i++;
             $j++;
         }
-        
-        // $i=2;
-        // $j=1;
-        // // $currentyear = '2022/2023';
-        // $currentyear = $annee.'/'.$annee+1;
-        // $operationcabs = $this->em->getRepository(TOperationcab::class)->getFacturesByCurrentYear($currentyear);
-        // // dd($operationcabs);
-        // foreach ($operationcabs as $operationcab) {
-        //     $sheet->setCellValue('A'.$i, $j);
-        //     $sheet->setCellValue('B'.$i, $operationcab['code_preins']);
-        //     $sheet->setCellValue('C'.$i, $operationcab['code_facture']);
-        //     $sheet->setCellValue('D'.$i, $operationcab['annee']);
-        //     $sheet->setCellValue('E'.$i, $operationcab['nom']);
-        //     $sheet->setCellValue('F'.$i, $operationcab['prenom']);
-        //     $sheet->setCellValue('G'.$i, $operationcab['nationalite']);
-        //     $sheet->setCellValue('H'.$i, $operationcab['etablissement']);
-        //     $sheet->setCellValue('I'.$i, $operationcab['formation']);
-        //     $sheet->setCellValue('J'.$i, $operationcab['promotion']);
-        //     $sheet->setCellValue('K'.$i, $operationdet->getOrganisme()->getAbreviation());
-        //     $sheet->setCellValue('L'.$i, $operationdet->getFrais()->getDesignation());
-        //     $sheet->setCellValue('M'.$i, $operationdet->getMontant());
-        //     $i++;
-        //     $j++;
-        // }
         $writer = new Xlsx($spreadsheet);
         $fileName = 'Extraction Des Articles.xlsx';
         $temp_file = tempnam(sys_get_temp_dir(), $fileName);
