@@ -66,10 +66,14 @@ class EtudiantController extends AbstractController
                 foreach ($cycles as $cycle) {
                     $stageClinique = $this->em->getRepository(Rapport::class)->findStage($inscription["id"], $cycle['stages'], "clinique");
                     $stageSimulation = $this->em->getRepository(Rapport::class)->findStage($inscription["id"], $cycle['stages'], "simulation");
+                    $stagePharmacy = $this->em->getRepository(Rapport::class)->findStage($inscription["id"], $cycle['stages'], "pharmacy");
+                    $stageSDentaire = $this->em->getRepository(Rapport::class)->findStage($inscription["id"], $cycle['stages'], "dentaire");
                     
                     array_push($arrayOfStage, [
                         'clinique' => $stageClinique,
-                        'simulation' => $stageSimulation
+                        'simulation' => $stageSimulation,
+                        'pharmacy' => $stagePharmacy,
+                        'dentaire' => $stageSDentaire
                     ]);
                 }
                 array_push($data, [
