@@ -1,17 +1,20 @@
+
 <table id="datatables_etudiant" class="display" style="width:100%">
     <thead>
         <tr>
             <th>Etudiant Infos</th>
+            {% set x=1 %}
             {% for cycle in cycles %}
-                <th>
-                {{cycle.cycle}}</th>
+                <th title="{{cycle.designation[0]}}">Stage {{x}}
+                {% set x=x+1 %}
+                </th>
             {% endfor %}
         </tr>
     </thead>
     <tbody>
         {% for data in datas %}
             <tr>
-                <td>{{data.inscription.code}} ({{data.inscription.nom}} {{data.inscription.prenom}})</td>
+                <td>{{data.inscription.id}} ({{data.inscription.nom}} {{data.inscription.prenom}})</td>
                 {% for stage in data.stages %}
                     <td>
                         {% if stage.clinique is null %}
@@ -33,6 +36,28 @@
                                 {% if stage.simulation.note %}  
                                     (Note: {{stage.simulation.note}})
                                 {% endif %} 
+                            </a>
+                        {% endif %}
+                        |
+                        {% if stage.pharmacy is null %}
+                            - 
+                        {% else %}
+                            <a href="{{path('rapport_stageDetails', {rapport: stage.pharmacy.id})}}" target="_blank" >
+                                Pharmacy
+                                {% if stage.pharmacy.note %}  
+                                    (Note: {{stage.pharmacy.note}})
+                                {% endif %}  
+                            </a>
+                        {% endif %}
+                        |
+                        {% if stage.dentaire is null %}
+                            - 
+                        {% else %}
+                            <a href="{{path('rapport_stageDetails', {rapport: stage.dentaire.id})}}" target="_blank" >
+                                Dentaire
+                                {% if stage.dentaire.note %}  
+                                    (Note: {{stage.dentaire.note}})
+                                {% endif %}  
                             </a>
                         {% endif %}
                     </td>
