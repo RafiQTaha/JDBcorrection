@@ -2,7 +2,11 @@
 <table id="datatables_etudiant" class="display" style="width:100%">
     <thead>
         <tr>
-            <th>Etudiant Infos</th>
+            <th>ID Ins</th>
+            <th>Code Ins</th>
+            <th>Code ADM</th>
+            <th>Nom</th>
+            <th>Prenom</th>
             {% set x=1 %}
             {% for cycle in cycles %}
                 <th title="{{cycle.designation[0]}}">Stage {{x}}
@@ -14,7 +18,11 @@
     <tbody>
         {% for data in datas %}
             <tr>
-                <td>{{data.inscription.id}} ({{data.inscription.nom}} {{data.inscription.prenom}})</td>
+                <td>{{data.inscription.id}}</td>
+                <td>{{data.inscription.ins_code}} </td>
+                <td>{{data.inscription.adm_code}} </td>
+                <td>{{data.inscription.nom}} </td>
+                <td>{{data.inscription.prenom}} </td>
                 {% for stage in data.stages %}
                     <td>
                         {% if stage.clinique is null %}
@@ -66,12 +74,12 @@
 
         {% endfor %}
     </tbody>
-    <tfoot>
+    {# <tfoot>
         <tr>
             <th>Etudiant Infos</th>
             {% for cycle in cycles %}
                 <th>{{cycle.cycle}}</th>
             {% endfor %}
         </tr>
-    </tfoot>
+    </tfoot> #}
 </table>

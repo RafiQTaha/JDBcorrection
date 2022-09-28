@@ -32,12 +32,13 @@ class EtudiantController extends AbstractController
                'sessions' => $sessions
            ]);
         }
-        $response = $this->client->request('GET', $this->getParameter("api")."/getetablissement");
-        $etablissements = $response->toArray();
-        return $this->render('etudiant/index.html.twig', [
-            'etablissements' => $etablissements,
-            'table' => $table
-        ]);
+        // $response = $this->client->request('GET', $this->getParameter("api")."/getetablissement");
+        // $etablissements = $response->toArray();
+        return $this->redirectToRoute("rapport_index");
+        // return $this->render('etudiant/index.html.twig', [
+        //     'etablissements' => $etablissements,
+        //     'table' => $table
+        // ]);
     }
     #[Route('/list/{session}', name: 'etudiant_list')]
     public function rapports(EnseignantSemestre $session, Request $request): Response
